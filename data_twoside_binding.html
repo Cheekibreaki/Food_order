@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <title>注册界面</title>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" :value='message' @input="update($event)">
+        <p>{{message}}</p>
+
+
+        <input type="text" :value='message' v-model="message">
+        <p>{{message}}</p>
+        <!-- by utilizing the v-model property, we can also enables twoways binding. This is basically synthetic sugar of the first approach -->
+
+    </div>
+
+    <script>
+      new Vue({
+        el:'#app',
+        data:{
+          message:'original'
+        },
+        methods:{
+            update(ev){
+                this.message=ev.target.value;
+                console.log(this.message);
+            }      
+            // enables twoways binding through event   
+        }
+      })
+    </script>
+    
+
+      
+    
+</body>
+
+</html>

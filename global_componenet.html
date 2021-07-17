@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <title>注册界面</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- <my-component></my-component> -->
+        <!-- 在div中,my-component课对应Vue.component 名称:"Mycomponenet"或者""my-componenet" -->
+    </div>
+
+    <div id="box">
+
+    </div>
+
+    <template id="btn">
+        <button @click="add"> you clicked {{count}} times</button>
+    </template>
+
+    <script>
+        Vue.component('Mycomponent', {
+            //no el
+            data() {
+                //use () and return
+                return {
+                    count: 0,
+                }
+            },
+
+            template: '#btn',
+
+            methods: {
+                add() {
+                    this.count++;
+                }
+            },
+            computed: {
+
+            }
+        });
+
+        new Vue({
+            el: '#app',
+            data: {
+                count: 0,
+            },
+            methods: {
+
+            },
+            computed: {
+
+            },
+            //template:'<my-component></my-component>' ,
+            //等于 <button @click="add"> you clicked {{count}} times</button>
+            template: '<Mycomponent />'
+        });
+
+
+        new Vue({
+            el: '#box',
+            data: {
+                count: 0,
+            },
+            methods: {
+
+            },
+            computed: {
+
+            },
+            //template:'<my-component></my-component>' ,
+            //等于 <button @click="add"> you clicked {{count}} times</button>
+            template: '<Mycomponent />'
+        });
+    </script>
+
+
+
+
+</body>
+
+</html>

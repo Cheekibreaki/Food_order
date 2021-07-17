@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <title>注册界面</title>
+</head>
+
+<body>
+    <div id="app">
+        <counter></counter>
+        <color></color>
+    </div>
+    <template id="count">
+        <div>
+            <!-- 在template中，必须要父级标签div -->
+            <button @click="add">你点了{{count}}次</button>
+            <span>kaivon</span>
+        </div>
+    </template>
+
+
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            components: {
+                // Counter:{
+                //     componenets:{
+                //         Son:{
+                //             components:{
+                //                 //可多个嵌套
+                //             }
+                //         }
+                //     }
+                // },
+
+                Counter: {
+                    data() {
+                        return {
+                            count: 0
+                        }
+                    },
+                    template: '#count',
+                    methods: {
+                        add() {
+                            this.count++;
+                        }
+                    }
+                },
+                Color: {
+                    data(){
+                        return{
+                            str:'red',
+                        }
+                    },
+                    template:'<h1>{{str}}</h1>'
+                },
+                Name: {
+
+                },
+            },
+            //template:'<counter />',
+        });
+    </script>
+
+
+
+
+</body>
+
+</html>

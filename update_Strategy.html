@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <title>The for loop</title>
+</head>
+
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="(wang,index) in wangs">
+                Adult: the age of {{wang.name}} is {{wang.age}}
+                <input type="text">
+                <button @click=move(index)>move down</button>
+                <!-- send in the parameter -->
+                <!-- You realize that when you click the button, the
+                name order changes, however the text in the textfiled 
+                remains unchanged -->
+            
+            </li>
+        </ul>
+        <hr>
+        <ul>
+            <li v-for="(wang,index) in wangs" :key="wang.name">
+                Adult: the age of {{wang.name}} is {{wang.age}}
+                <input type="text">
+                <button @click=move(index)>move down</button>
+                <!-- send in the parameter -->
+                <!-- Through utilizing the "key"->update through wang.age the vue updates the entire li element-->
+            
+            </li>
+        </ul>
+
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                wangs: [
+                    { name: 'Big', age: 40 },
+                    { name: 'Mid', age: 20 },
+                    { name: 'Small', age: 16 },
+                    { name: 'Extra Small', age: 6 },
+                ],
+            },
+            methods: {
+                move(i){
+                    const deleteData=this.wangs.splice(i, 1);//delete and get only 1
+                    this.wangs.splice(i+1, 0, ...deleteData)//add but replace 0, add remeber the"..."!!!!
+                }
+            },
+        });
+       
+        function filterAge(){
+            for(var i=0; i<vm.wangs.length; i++)
+            if(vm.wangs[i].age>=18){
+               vm.adults.push(vm.wangs[i]);
+            }
+        }
+        filterAge();
+        console.log(vm.adults);
+    </script>
+
+
+
+</body>
+
+</html>

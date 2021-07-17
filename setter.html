@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <title>注册界面</title>
+</head>
+
+<body>
+    <div id="app">
+        <p>{{getName()}}</p>
+        <p>{{fullName}}</p>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                firstName: 'foo',
+                lastName: 'bar'
+            },
+            methods: {
+                getName() {
+                    return this.firstName + ' ' + this.lastName;
+                }
+            },
+            computed: {
+                // fullName() {
+                //     return this.firstName + ' ' + this.lastName;
+                // }
+                //不能使用set
+                fullName:{
+                    get(){
+                        return this.firstName+' '+this.lastName;
+                    },
+                    set(newValue){//avialiable when using vm.fullNmae='blahblahblah'
+                        this.firstName=newValue[0];
+                        this.firstName=newValue.substr(1);
+                    }
+                }
+            }
+        })
+
+        var obj={
+            age:12,
+            name:'kaivon'/*每一条属性都有属性描述对象
+        }
+        /*
+            属性描述对象
+            setter 存值函数
+            getter 取值函数
+        */
+    </script>
+
+
+
+
+</body>
+
+</html>

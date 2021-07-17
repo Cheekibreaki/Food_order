@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <title>注册界面</title>
+</head>
+
+<body>
+    <div id="app">
+        <section-head>
+            <template v-slot:title>
+                <h3>人气推荐</h3>
+            </template>
+        </section-head>
+    </div>
+    <!-- 此为父模板 -->
+    <template id="head">
+        <div class="title">
+            <slot name='title'></slot>
+            <!-- 子组件只能在父组件里面使用，不需要插槽 -->
+            <tab>
+                <template #tab1>
+                    <a href='#' class="active">编辑推荐</a>
+                    <a href='#'>热销总榜</a>
+                </template>
+                <template #tab2>
+                    <a href='#'>更多推荐</a>
+                </template>
+            </tab>
+        </div>
+    </template>
+    <!-- 此为子模板 -->
+    <template id="tab">
+        <!-- <div class="tab">
+            <a href='#' class="active">编辑推荐</a>
+            <a href='#'>热销总榜</a>
+
+        </div>
+        <div class="more">
+            <a href='#'>更多推荐</a>
+        </div> -->
+        <!-- same as below -->
+        <div class="tab">
+            <slot name='tab1'></slot>
+            <slot name='tab2'></slot>
+        </div>
+    </template>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            components: {
+                SectionHead: {
+                    template: '#head',
+                    components: {
+                        Tab: {
+                            template: '#tab'
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+
+
+
+
+</body>
+
+</html>

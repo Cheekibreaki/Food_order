@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <title>The for loop</title>
+</head>
+
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="color in colors">{{color}}</li>
+            <hr>
+            <!--  straight line -->
+            <li v-for="(wang,index) in wangs">the age of {{wang.name}} is {{wang.age}}, the index is {{index}}</li>
+            <hr>
+            <!--  straight line -->
+            <li v-for="(item, key, index) in kaivon">the property value is: {{item}}, the property name is {{key}}, the index is {{index}}</li>
+            <hr>
+            <!--  straight line -->
+            <li v-for="n in 10">{{n}}</li>;
+            <hr>
+            <!--  straight line -->
+            <li v-for="wang in wangs" v-if="wang.age>=18">Adult: the age of {{wang.name}} is {{wang.age}}</li>
+            <!-- it works, but cuases performance loss because v-for iteration is implemented first and then v-if -->
+            <hr>
+            <!--  straight line -->
+            <li v-for="adult in adults">Adult: the age of {{adult.name}} is {{adult.age}}</li>
+        </ul>
+    </div>
+    <script>
+        const arr = ['html', 'css', 'js'];
+        console.log(arr);
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                colors: ['red', 'green', 'blue'],
+                wangs: [
+                    { name: 'Big', age: 40 },
+                    { name: 'Mid', age: 20 },
+                    { name: 'Small', age: 16 },
+                ],
+                adults: [
+
+                ],
+                kaivon:{
+                    name:'Peter Li',
+                    trait:'handsome'
+                }
+            }
+        });
+       
+        function filterAge(){
+            for(var i=0; i<vm.wangs.length; i++)
+            if(vm.wangs[i].age>=18){
+               vm.adults.push(vm.wangs[i]);
+            }
+        }
+        filterAge();
+        console.log(vm.adults);
+    </script>
+
+
+
+</body>
+
+</html>

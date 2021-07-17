@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <title>注册界面</title>
+    <style>
+        .dl{
+            width: 2000px; 
+            /* 设置足够的宽度 */
+            overflow: hidden;
+            white-space: nowrap; 
+            /* 处理块元素中的空白符和换行  */
+        }
+
+        .dt {
+            list-style: none;
+            float: left;
+            margin-left: 15px;
+            width: 130px;
+        }
+        .active{
+            color:orangered;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <dl class="dl" v-for="(good, goodIndex) in goodsList" :key="good.id">
+            <!-- Through utilizing the "key"->update through good.id the vue updates the entire dl element-->
+            <dt class="dt">{{good.title}}</dt>
+            <dd class="dt" v-for="(list,listIndex) in good.list" :key="list" @click="select(list,listIndex,good,goodIndex)"
+            :class="{active:listIndex===good.cn}">
+                {{list}}
+            </dd>
+        </dl>
+        <div class="select">
+            <h3>Selected:</h3>
+            <p v-if="Object.keys(selectedGoods).length===0">No conditions selected</p>
+            <ul>
+                <li class="dt" v-for="(value,key,index) in selectedGoods">{{value}}<span @click="deleteSelect(key)"> x</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                selectedGoods:{
+                    // the object saves the selected objects, the goal is to make sure same type of item won't appear simutaneously
+                    
+                },
+                goodsList: [
+                    {
+                        title: 'Brands',
+                        list: ['Hp', 'Lenovo', 'Dell', 'Samsang', 'Apple', 'Microsoft'],
+                        id: 1,// to ensure the data not repeats 
+                    },
+                    {
+                        title: 'Price',
+                        list: ['3000-3999', '4000-4999', '5000-5999', '7000-7999', '8000-8999', '9000-9999', 'Above 10000'],
+                        id: 2,
+                    },
+                    {
+                        title: 'Size in inch',
+                        list: ['8.9 and below', '11', '12', '13', '14', '15', '16'],
+                        id: 3,
+                    },
+                    {
+                        title: 'GPU',
+                        list: ['Dedicated', 'Integrated', 'Discrete'],
+                        id: 4,
+                    },
+                ]
+            },
+            methods:{
+                select(list, listIndex, good, goodIndex){
+                    
+                    good.cn=listIndex;
+                    console.log(this.goodsList[0].cn);
+                    this.$set(this.selectedGoods,goodIndex,list);
+                },
+                deleteSelect(key){
+                    this.$delete(this.selectedGoods,key);
+                    this.goodsList[key].cn='';
+                }
+            }
+        })
+    </script>
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <title>css_Control</title>
+    <style>
+        .green {
+            color: green;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .active {
+            background: pink;
+        }
+
+        .align {
+            text-align: right;
+        }
+
+        .div {
+            width: 100px;
+            height: 100px;
+            background-color: rgb(77, 8, 8);
+        }
+
+        .div2 {
+            width: 200px;
+            height: 300px;
+            background-color: blue;
+        }
+
+        .fontStyle {
+            font-size: 39px;
+            color: indigo;
+        }
+
+        .borderStyle {
+            border: 5px solid;
+            border-color: indigo;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h2 class="title" v-bind:class="cl" @click="changeColor">class-binding</h2>
+        <!-- Original js properties("title") can coexist with prsoperties rely on Vue("Green") -->
+
+        <h2 v-bind:class="{active:ac, align:al}" @click="ac=!ac"> object-grammar-binding</h2>
+        <!-- Bind the class property("active" and "align") with boolean variable("ac" and "al")
+        the key is class, the value is booean variable the determines whether it is turned on-->
+
+        <h2 v-bind:class="classObject" @click="classObject.active=!classObject.active"> object-grammar-binding</h2>
+        <!--you can put multiple properties into an object in Vue-->
+
+        <button @click="dv=!dv;dv2=!dv2"> Change div class </button>
+        <div v-bind:class="{div:dv, div2:dv2}">abc </div>
+        <!-- through change the boolean variable property, we can change the div property -->
+
+        <h2 v-bind:class="classObj2"> bind a class. the value is in the calculation property</h2>
+        <!--  bind a class. the value is in the calculation property-->
+
+        <h2 :class="[fs,bs]">binding class through array</h2>
+        <!-- binding class through array, key inside the array, value in Vue is the class name  -->
+
+        <h2 :class="[{active:true},bs]">2 binding class through array</h2>
+        <!-- binding class through array, key inside the array, {class key: true or false} allows the class to be implemented or not -->
+
+        <div :style="{color:colorC, fontSize:fontC}"> a text </div>
+        <!-- CSS as the key, css style as the value -->
+
+        <div :style="styleObj"> a text </div>
+        <!-- Create a css object -->
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                cl: 'green',
+                ac: false,
+                al: true,
+                classObject: {
+                    active: true,
+                    align: false
+                },
+                dv: true,
+                dv2: false,
+                fs: 'fontStyle',
+                bs: 'borderStyle',
+                colorC: 'green',
+                fontC: '70px',
+                styleObj:{
+                    color:'red',
+                    fontSize: '40px'
+                }
+            },
+            methods: {
+                changeColor() {
+                    this.cl = "red";
+                }
+            },
+            computed: {
+                classObj2() {
+                    return {
+                        active: !this.ac,
+                        align: this.al || false
+                    }
+                }
+            }
+        })
+    </script>
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <title>注册界面</title>
+</head>
+
+<body>
+    <div id="app">
+        {{firstName}}+{{lastName}}
+        <button @click='change'>change</button>
+        {{author}}
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                firstName: 'foo',
+                lastName: 'bar',
+                author: {
+                    name: 'kaivon',
+                    age: 18,
+                    technology: {
+                        sing: 'so-so',
+                        drive: 'old driver',
+                    }
+                }
+            },
+            methods: {
+                change() {
+                    this.firstName = 'kaivon';
+
+                    //this.author={name:'Chen',age:20};
+                    this.author.technology.drive = '出神入化'
+                    //this.author.name='Chen';
+                    //wont initiate watch for author, because we only changed author.name not author entirely, unless we turn on deep watch!
+                }
+                //alternative 2 for watch 
+                // firstNameChange(){
+                //     console.log('firstName Changed');
+                //     console.log('newValue is' + newVal);
+                //     console.log('oldValue is' + oldVal);
+                // }
+            },
+            watch: {
+                //alternative 1
+                // firstName(){
+                //     console.log('firstName Changed');
+                //     console.log('newValue is' + newVal);
+                //     console.log('oldValue is' + oldVal);
+                // }
+                //alternative 2 for watch 
+                //firstName:'firstNameChange',
+                firstName: {
+                    handler(newVal, oldVal) {
+                        console.log('new Value is' + newVal);
+                        console.log('old value is' + oldVal);
+                    }
+                },
+                //method 1
+                author: {
+                    handler(newVal, oldVal) {
+                        console.log('author changed');
+                    },
+                    deep: true,//turn on deep watch to watch any child element under author, but causes performance loss
+                    immediate: true,// take place immediately even no watch is detected
+                },
+                //method 2 for specific watch
+                'author.technology.drive': function (newVal, oldVal) {
+                    console.log('new value is: ' + newVal);
+                    console.log('old value is: ' + oldVal);
+                }
+            }
+        });
+        //method 3 for specific watch, through using unwatch we only watch if the goal is not reached
+        const unWatch = vm.$watch('author.technology.drive', function (newVal, oldVal) {
+            console.log('new value is' + newVal);
+            console.log('old value is' + oldVal)
+
+            if(newVal=='出神入化'){//we have reached the goal '出神入化' now stop watching
+                unWatch();
+                return;
+            }
+
+        }, {
+            deep: true,
+            immediate: true,
+        });
+
+    </script>
+
+
+
+
+</body>
+
+</html>

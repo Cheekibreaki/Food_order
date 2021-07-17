@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <title>注册界面</title>
+</head>
+
+<body>
+    <div id="app">
+        {{fullName}}<br>
+        {{fullName1}}
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                firstName: 'Nikolas',
+                lastName: 'Tesla',
+                fullName1:'Nikolas Tesla'
+            },
+            methods: {
+                // fullName() {
+                //     return this.firstName + ' ' + this.lastName;
+                // }
+            },
+            computed: {
+                fullName(){//一个变不影响其他
+                    return this.firstName+' '+this.lastName;
+                }
+            },
+            watch:{//一个变多个变
+                firstName(){
+                    this.fullName=this.firstName+' '+this.lastName;
+                },
+                lastName(){
+                    this.fullName=this.firstName+' '+this.lastName;
+                }
+            }
+            //the watch and computed do the same thing, but in this case computed is easier
+        })
+    </script>
+
+
+
+
+</body>
+
+</html>

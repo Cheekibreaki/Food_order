@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <title>注册界面</title>
+</head>
+
+<body>
+    <div id="app">
+        <my-color :data="colors"></my-color>
+        <kaivon name="Chen" :age="3" :sing='true' :weight='2'></kaivon>
+        <!-- need to use dynamic to set a boolean variable -->
+        <!-- 动态绑定，被绑定的要不然是变量要不然是表达式 -->
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    colors: ['red', 'green', 'blue'],
+                    // colors :function(){
+
+                    // } without using type, the error is not detected
+                }
+            },
+            components: {
+                MyColor: {
+                    // props:['data'], error can not be detected
+                    props: {
+                        data:{
+                            type:Array//this causes the web to report error
+                        }
+                    },
+                    template:`
+                        <ul>
+                            <li v-for="color in data" :key="color">{{color}}</li>
+                        </ul>
+                    `
+                },
+                Kaivon: {
+                    // props:['data'], error can not be detected
+                    props: {
+                        name:{
+                            type:String//this causes the web to report error
+                        },
+                        sing:{
+                            type:Boolean,
+                            required:true//数据必须要被输入
+                        },
+                        // age:{
+                        //     type:Number
+                        // }, equal below
+                        age:[Number,String],
+                        height:{
+                            type:[Number,String],
+                            default:'180cm'//不传参时的default值
+                        },
+                        interest:{
+                            type: Array,
+                            //default:['read','eat','live'],
+                            //default: ()=>['read','eat','live'],//如果你的数据是一个对象或者数组，你就不能直接给default,而是要当作一个函数的返回值赋给它
+                            default: function(){
+                                return ['read','eat','live'];
+                            }
+                        },
+                        weight:{
+                            type: Number,
+                           // validator: val=>val>0,//如果val <0 将会报错
+                            validator: function(val){
+                                return val>0;
+                            }
+                        }
+                    },
+                    template:`
+                        <div>
+                            <h2>{{name}}</h2>
+                            <p>唱歌: {{sing? 'yes':'no'}}</p>
+                            <p>Age:{{age}}</p>
+                            <p>Height:{{height}}
+                            <p>{{interest}}</p>
+                        </div>
+                    `
+                }
+            }
+        })
+    </script>
+
+
+
+
+</body>
+
+</html>
